@@ -1,0 +1,9 @@
+CREATE TABLE IF NOT EXISTS reviews (
+    id TEXT PRIMARY KEY NOT NULL UNIQUE,
+    username TEXT NOT NULL,
+    ad_id TEXT NOT NULL,
+    review TEXT NOT NULL,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (username) REFERENCES users(username),
+    FOREIGN KEY (ad_id) REFERENCES ads(id)
+)
