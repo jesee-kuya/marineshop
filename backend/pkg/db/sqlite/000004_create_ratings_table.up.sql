@@ -1,0 +1,9 @@
+CREATE TABLE IF NOT EXISTS ratings (
+    id TEXT PRIMARY KEY,
+    user_id TEXT NOT NULL,
+    ad_id TEXT NOT NULL,
+    rating INTEGER NOT NULL CHECK (rating BETWEEN 0 AND 5),
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (ad_id) REFERENCES ads(id)
+);
