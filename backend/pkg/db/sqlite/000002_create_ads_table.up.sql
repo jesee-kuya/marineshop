@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS ads (
-    id TEXT PRIMARY KEY,
+    id TEXT PRIMARY KEY NOT NULL UNIQUE,
     description TEXT NOT NULL,
     price DECIMAL(10, 2) NOT NULL,
     item_count INTEGER NOT NULL,
