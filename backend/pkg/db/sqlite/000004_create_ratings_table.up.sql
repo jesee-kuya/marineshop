@@ -4,6 +4,6 @@ CREATE TABLE IF NOT EXISTS ratings (
     ad_id TEXT NOT NULL,
     rating INTEGER NOT NULL CHECK (rating BETWEEN 0 AND 5),
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(username),
+    FOREIGN KEY (username) REFERENCES users(username),
     FOREIGN KEY (ad_id) REFERENCES ads(id)
 );
