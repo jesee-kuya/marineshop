@@ -20,7 +20,7 @@ func (app *App) SignUp(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if err := app.Query.InsertData("users", []string{
+	if err := app.Queries.InsertData("users", []string{
 		"email",
 		"username",
 		"password",
