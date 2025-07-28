@@ -6,6 +6,7 @@ import (
 
 	"github.com/jesee-kuya/marineshop/pkg/db"
 	"github.com/jesee-kuya/marineshop/pkg/handler"
+	"github.com/jesee-kuya/marineshop/pkg/model"
 	"github.com/jesee-kuya/marineshop/pkg/repository"
 )
 
@@ -15,10 +16,11 @@ func main() {
 		log.Default().Println(err)
 	}
 
-	app := &handler.App{
-		Query: &repository.Query{
+	app := handler.App{
+		Queries: repository.Query{
 			Db: db,
 		},
+		User: &model.User{},
 	}
 
 	server := http.Server{
@@ -34,4 +36,5 @@ func main() {
 	}()
 
 	log.Default().Printf("Server started on port %s", server.Addr)
+	select {}
 }
