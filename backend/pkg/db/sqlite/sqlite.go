@@ -29,7 +29,7 @@ func InitDB(dbPath, migrationsPath string) (*sql.DB, error) {
 	}
 
 	err = m.Up()
-	if err != nil {
+	if err != nil && err != migrate.ErrNoChange {
 		return nil, err
 	}
 
