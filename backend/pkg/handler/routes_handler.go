@@ -15,5 +15,8 @@ type App struct {
 func (app *App) Routes() http.Handler {
 	mux := http.NewServeMux()
 
+	fs := http.FileServer(http.Dir("pkg/db/media"))
+	mux.Handle("/pkg/db/media/", http.StripPrefix("/pkg/db/media/", fs))
+
 	return mux
 }
