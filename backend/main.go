@@ -4,14 +4,14 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/jesee-kuya/marineshop/pkg/db"
+	database "github.com/jesee-kuya/marineshop/pkg/db"
 	"github.com/jesee-kuya/marineshop/pkg/handler"
 	"github.com/jesee-kuya/marineshop/pkg/model"
 	"github.com/jesee-kuya/marineshop/pkg/repository"
 )
 
 func main() {
-	db, err := db.Init()
+	db, err := database.Init()
 	if err != nil {
 		log.Default().Println(err)
 	}
