@@ -4,12 +4,14 @@ import (
 	"net/http"
 
 	"github.com/jesee-kuya/marineshop/pkg/model"
+	"github.com/jesee-kuya/marineshop/pkg/repository"
 )
 
 var AllowedRoutes = map[string][]string{}
 
 type App struct {
-	User *model.User
+	Query *repository.Query
+	User  *model.User
 }
 
 func (app *App) Routes() http.Handler {
