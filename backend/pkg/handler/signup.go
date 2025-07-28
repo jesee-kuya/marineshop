@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/jesee-kuya/marineshop/pkg/model"
+	"github.com/jesee-kuya/marineshop/pkg/util"
 )
 
 func (app *App) SignUp(w http.ResponseWriter, r *http.Request) {
@@ -21,12 +22,14 @@ func (app *App) SignUp(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if err := app.Queries.InsertData("users", []string{
+		"id",
 		"email",
 		"username",
 		"password",
 		"role",
 		"status",
 	}, []any{
+		util.UUIDGen(),
 		user.Email,
 		user.Username,
 		user.Password,
