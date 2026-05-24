@@ -1,5 +1,5 @@
 package middleware
 
-type Middleware struct {
+type MiddlewareStruct struct {
 	JWT string
 }
