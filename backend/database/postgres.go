@@ -5,7 +5,6 @@ import (
 
 	"github.com/jmoiron/sqlx"
 	_ "github.com/lib/pq"
-
 )
 
 // NewPostgresDB creates a new PostgreSQL database connection with proper pooling.
