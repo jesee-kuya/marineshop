@@ -3,9 +3,6 @@ package config
 import (
 	"fmt"
 	"log"
-	"os"
-	"strconv"
-	"strings"
 	"time"
 
 	"github.com/jesee-kuya/marineshop/domain"
