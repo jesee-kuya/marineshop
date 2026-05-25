@@ -33,7 +33,7 @@ type BuyerHandler interface {
 	Checkout(c *gin.Context)
 	TransactionHistory(c *gin.Context)
 	OrderManagement(c *gin.Context)
-}  
+}
 type AdminHandler interface {
 	GETKYC(c *gin.Context)
 	ApproveKYC(c *gin.Context)
