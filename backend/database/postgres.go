@@ -3,13 +3,14 @@ package postgress
 import (
 	"fmt"
 
+	"github.com/jesee-kuya/marineshop/domain"
 	"github.com/jmoiron/sqlx"
 	_ "github.com/lib/pq"
 )
 
 // NewPostgresDB creates a new PostgreSQL database connection with proper pooling.
 func NewPostgresDB(cfg *domain.Config) (*sqlx.DB, error) {
-	dbConfig := Config{
+	dbConfig := domain.DatabaseConfig{
 		Host:            cfg.Database.Host,
 		Port:            cfg.Database.Port,
 		User:            cfg.Database.User,

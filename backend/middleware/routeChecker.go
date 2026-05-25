@@ -1,5 +1,13 @@
 package middleware
 
+import (
+	"fmt"
+	"net/http"
+	"slices"
+
+	"github.com/gin-gonic/gin"
+)
+
 var allowedRoutes = map[string][]string{}
 
 func (middleware *MiddlewareStruct) RouteChecker() gin.HandlerFunc {
