@@ -8,7 +8,11 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-var allowedRoutes = map[string][]string{}
+var allowedRoutes = map[string][]string{
+	"/health":             {"GET"},
+	"/api/v1/auth/signup": {"POST"},
+	"/api/v1/auth/login":  {"POST"},
+}
 
 func (middleware *MiddlewareStruct) RouteChecker() gin.HandlerFunc {
 	return func(c *gin.Context) {
