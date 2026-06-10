@@ -4,11 +4,11 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/jesee-kuya/marineshop/middleware"
 )
 
-func SetupRoutes(router *gin.Engine, mw middleware.Middleware, authHandler AuthHandler) {
-	router.Use(mw.RouteChecker())
+func (shop *Marineshop) SetupRoutes() *gin.Engine {
+	router := gin.Default()
+	router.Use(shop.Middleware.RouteChecker())
 
 	router.GET("/health", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{"status": "ok"})
@@ -18,7 +18,9 @@ func SetupRoutes(router *gin.Engine, mw middleware.Middleware, authHandler AuthH
 
 	authGroup := api.Group("/auth")
 	{
-		authGroup.POST("/signup", authHandler.Signup)
-		authGroup.POST("/login", authHandler.Login)
+		authGroup.POST("/signup", shop.Auth.Signup)
+		authGroup.POST("/login", shop.Auth.Login)
 	}
+
+	return router
 }
