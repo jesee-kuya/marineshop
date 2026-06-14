@@ -18,8 +18,8 @@ func (shop *Marineshop) SetupRoutes() *gin.Engine {
 
 	authGroup := api.Group("/auth")
 	{
-		authGroup.POST("/signup", shop.Auth.Signup)
-		authGroup.POST("/login", shop.Auth.Login)
+		authGroup.POST("/signup", shop.Signup)
+		authGroup.POST("/login", shop.Login)
 	}
 
 	return router
