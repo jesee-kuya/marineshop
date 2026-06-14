@@ -8,14 +8,14 @@ import (
 	"github.com/jesee-kuya/marineshop/domain"
 )
 
-func (h *Authentication) Signup(c *gin.Context) {
+func (shop *Marineshop) Signup(c *gin.Context) {
 	var req domain.SignupRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	res, err := h.AuthService.Signup(c.Request.Context(), &req)
+	res, err := shop.AuthService.Signup(c.Request.Context(), &req)
 	if err != nil {
 		if errors.Is(err, domain.ErrEmailInUse) {
 			c.JSON(http.StatusConflict, gin.H{"error": err.Error()})
