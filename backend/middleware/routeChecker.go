@@ -9,9 +9,11 @@ import (
 )
 
 var allowedRoutes = map[string][]string{
-	"/health":             {"GET"},
-	"/api/v1/auth/signup": {"POST"},
-	"/api/v1/auth/login":  {"POST"},
+	"/health":                      {"GET"},
+	"/api/v1/auth/signup":          {"POST"},
+	"/api/v1/auth/login":           {"POST"},
+	"/api/v1/auth/reset-password":  {"POST"},
+	"/api/v1/auth/change-password": {"POST"},
 }
 
 func (middleware *MiddlewareStruct) RouteChecker() gin.HandlerFunc {
