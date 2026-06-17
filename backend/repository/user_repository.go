@@ -3,6 +3,7 @@ package repository
 import (
 	"context"
 
+	"github.com/google/uuid"
 	"github.com/jesee-kuya/marineshop/domain"
 	"github.com/jmoiron/sqlx"
 )
@@ -10,6 +11,8 @@ import (
 type UserRepository interface {
 	CreateUser(ctx context.Context, user *domain.User) (*domain.User, error)
 	FindByEmail(ctx context.Context, email string) (*domain.User, error)
+	FindByID(ctx context.Context, id uuid.UUID) (*domain.User, error)
+	UpdatePassword(ctx context.Context, id uuid.UUID, hashedPassword string) error
 }
 
 type userRepository struct {
@@ -44,4 +47,21 @@ func (r *userRepository) FindByEmail(ctx context.Context, email string) (*domain
 		return nil, err
 	}
 	return user, nil
+}
+
+func (r *userRepository) FindByID(ctx context.Context, id uuid.UUID) (*domain.User, error) {
+	query := `SELECT id, username, email, password, role FROM users WHERE id = $1`
+	user := &domain.User{}
+	err := r.db.QueryRowContext(ctx, query, id).
+		Scan(&user.ID, &user.Username, &user.Email, &user.Password, &user.Role)
+	if err != nil {
+		return nil, err
+	}
+	return user, nil
+}
+
+func (r *userRepository) UpdatePassword(ctx context.Context, id uuid.UUID, hashedPassword string) error {
+	query := `UPDATE users SET password = $1 WHERE id = $2`
+	_, err := r.db.ExecContext(ctx, query, hashedPassword, id)
+	return err
 }
