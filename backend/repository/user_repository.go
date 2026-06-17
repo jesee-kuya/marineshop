@@ -8,17 +8,6 @@ import (
 	"github.com/jmoiron/sqlx"
 )
 
-type UserRepository interface {
-	CreateUser(ctx context.Context, user *domain.User) (*domain.User, error)
-	FindByEmail(ctx context.Context, email string) (*domain.User, error)
-	FindByID(ctx context.Context, id uuid.UUID) (*domain.User, error)
-	UpdatePassword(ctx context.Context, id uuid.UUID, hashedPassword string) error
-}
-
-type userRepository struct {
-	db *sqlx.DB
-}
-
 func NewUserRepository(db *sqlx.DB) UserRepository {
 	return &userRepository{db: db}
 }
