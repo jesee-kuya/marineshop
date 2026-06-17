@@ -20,6 +20,13 @@ func (shop *Marineshop) SetupRoutes() *gin.Engine {
 	{
 		authGroup.POST("/signup", shop.Signup)
 		authGroup.POST("/login", shop.Login)
+		authGroup.POST("/reset-password", shop.ResetPassword)
+	}
+
+	protected := api.Group("/")
+	protected.Use(shop.Middleware.AuthMiddleware())
+	{
+		protected.POST("/auth/change-password", shop.ChangePassword)
 	}
 
 	return router
