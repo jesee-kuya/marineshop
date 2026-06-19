@@ -29,7 +29,7 @@ func main() {
 
 	userRepo := repository.NewUserRepository(db)
 	authService := service.NewAuthService(userRepo, &cfg.JWT)
-	middleware := middleware.NewMiddleware()
+	middleware := middleware.NewMiddleware(&cfg.JWT)
 
 	shop := handler.Marineshop{
 		AuthService: authService,
