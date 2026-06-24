@@ -13,3 +13,8 @@ type UserRepository interface {
 	FindByID(ctx context.Context, id uuid.UUID) (*domain.User, error)
 	UpdatePassword(ctx context.Context, id uuid.UUID, hashedPassword string) error
 }
+
+type KYCRepository interface {
+	CreateSellerKYC(ctx context.Context, kyc *domain.SellerKYC) (*domain.SellerKYC, error)
+	FindKYCByUserID(ctx context.Context, userID uuid.UUID) (*domain.SellerKYC, error)
+}
