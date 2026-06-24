@@ -32,6 +32,7 @@ func (shop *Marineshop) SetupRoutes() *gin.Engine {
 		{
 			sellerGroup.POST("/kyc", shop.CollectkYC)
 			sellerGroup.POST("/shop", shop.SetUpShop)
+			sellerGroup.POST("/payment", shop.SetUpPayment)
 		}
 	}
 
