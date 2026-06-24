@@ -5,12 +5,7 @@ import (
 
 	"github.com/google/uuid"
 	"github.com/jesee-kuya/marineshop/domain"
-	"github.com/jmoiron/sqlx"
 )
-
-func NewUserRepository(db *sqlx.DB) UserRepository {
-	return &userRepository{db: db}
-}
 
 func (r *userRepository) CreateUser(ctx context.Context, user *domain.User) (*domain.User, error) {
 	query := `
