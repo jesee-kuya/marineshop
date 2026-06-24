@@ -29,3 +29,9 @@ type CollectKYCRequest struct {
 	Selfie             string `json:"selfie" binding:"required"`
 	Location           string `json:"location" binding:"required"`
 }
+
+type SetUpShopRequest struct {
+	BusinessName string `json:"business_name" binding:"required"`
+	DocumentType string `json:"document_type" binding:"required,oneof=permit certificate incorporation_letter"`
+	Document     string `json:"document" binding:"required"`
+}
