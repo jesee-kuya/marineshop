@@ -29,15 +29,18 @@ func main() {
 
 	userRepo := repository.NewUserRepository(db)
 	kycRepo := repository.NewKYCRepository(db)
+	moneyRepo := repository.NewMoneyRepository(db)
 
 	authService := service.NewAuthService(userRepo, &cfg.JWT)
 	sellerService := service.NewSellerService(kycRepo)
+	moneyService := service.NewMoneyService(moneyRepo, kycRepo)
 
 	middleware := middleware.NewMiddleware(&cfg.JWT)
 
 	shop := handler.Marineshop{
 		AuthService:   authService,
 		SellerService: sellerService,
+		MoneyService:  moneyService,
 		Middleware:    middleware,
 	}
 
