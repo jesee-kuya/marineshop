@@ -13,3 +13,7 @@ type AuthService interface {
 	ChangePassword(ctx context.Context, userID uuid.UUID, req *domain.ChangePasswordRequest) error
 	ResetPassword(ctx context.Context, req *domain.ResetPasswordRequest) error
 }
+
+type SellerService interface {
+	CollectKYC(ctx context.Context, userID uuid.UUID, req *domain.CollectKYCRequest) (*domain.SellerKYC, error)
+}
