@@ -19,3 +19,14 @@ type SellerKYC struct {
 	CreatedAt          time.Time `json:"created_at"`
 	UpdatedAt          time.Time `json:"updated_at"`
 }
+
+type BusinessKYC struct {
+	ID           uuid.UUID `json:"id"`
+	SellerKYCID  uuid.UUID `json:"seller_kyc_id"`
+	BusinessName string    `json:"business_name"`
+	DocumentType string    `json:"document_type"`
+	Document     string    `json:"document"`
+	Status       string    `json:"status"`
+	CreatedAt    time.Time `json:"created_at"`
+	UpdatedAt    time.Time `json:"updated_at"`
+}
