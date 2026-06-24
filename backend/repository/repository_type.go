@@ -9,3 +9,7 @@ type userRepository struct {
 type kycRepository struct {
 	db *sqlx.DB
 }
+
+type moneyRepository struct {
+	db *sqlx.DB
+}
