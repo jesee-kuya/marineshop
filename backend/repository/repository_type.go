@@ -5,3 +5,7 @@ import "github.com/jmoiron/sqlx"
 type userRepository struct {
 	db *sqlx.DB
 }
+
+type kycRepository struct {
+	db *sqlx.DB
+}
