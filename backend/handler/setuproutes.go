@@ -31,6 +31,7 @@ func (shop *Marineshop) SetupRoutes() *gin.Engine {
 		sellerGroup := protected.Group("/seller")
 		{
 			sellerGroup.POST("/kyc", shop.CollectkYC)
+			sellerGroup.POST("/shop", shop.SetUpShop)
 		}
 	}
 
