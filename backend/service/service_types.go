@@ -9,3 +9,7 @@ type Auth struct {
 	UserRepo repository.UserRepository
 	JwtCfg   *domain.JWTConfig
 }
+
+type Seller struct {
+	KYCRepo repository.KYCRepository
+}
