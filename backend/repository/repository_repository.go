@@ -17,4 +17,6 @@ type UserRepository interface {
 type KYCRepository interface {
 	CreateSellerKYC(ctx context.Context, kyc *domain.SellerKYC) (*domain.SellerKYC, error)
 	FindKYCByUserID(ctx context.Context, userID uuid.UUID) (*domain.SellerKYC, error)
+	CreateBusinessKYC(ctx context.Context, kyc *domain.BusinessKYC) (*domain.BusinessKYC, error)
+	FindBusinessKYCBySellerKYCID(ctx context.Context, sellerKYCID uuid.UUID) (*domain.BusinessKYC, error)
 }
