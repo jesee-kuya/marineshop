@@ -18,3 +18,7 @@ type SellerService interface {
 	CollectKYC(ctx context.Context, userID uuid.UUID, req *domain.CollectKYCRequest) (*domain.SellerKYC, error)
 	SetUpShop(ctx context.Context, userID uuid.UUID, req *domain.SetUpShopRequest) (*domain.BusinessKYC, error)
 }
+
+type MoneyService interface {
+	SetUpPayment(ctx context.Context, userID uuid.UUID, req *domain.SetUpPaymentRequest) (*domain.SellerPaymentAccount, error)
+}
