@@ -17,7 +17,7 @@ func (m *Money) SetUpPayment(ctx context.Context, userID uuid.UUID, req *domain.
 		return nil, domain.ErrSellerKYCNotFound
 	}
 
-	if err := validatePaymentDetails(req); err != nil {
+	if err := ValidatePaymentDetails(req); err != nil {
 		return nil, err
 	}
 
@@ -43,7 +43,7 @@ func (m *Money) SetUpPayment(ctx context.Context, userID uuid.UUID, req *domain.
 	return m.MoneyRepo.CreateSellerPaymentAccount(ctx, account)
 }
 
-func validatePaymentDetails(req *domain.SetUpPaymentRequest) error {
+func ValidatePaymentDetails(req *domain.SetUpPaymentRequest) error {
 	switch req.WalletType {
 	case "mpesa", "airtel_money":
 		if req.PhoneNumber == "" {
