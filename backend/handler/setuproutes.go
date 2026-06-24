@@ -27,6 +27,11 @@ func (shop *Marineshop) SetupRoutes() *gin.Engine {
 	protected.Use(shop.Middleware.AuthMiddleware())
 	{
 		protected.POST("/auth/change-password", shop.ChangePassword)
+
+		sellerGroup := protected.Group("/seller")
+		{
+			sellerGroup.POST("/kyc", shop.CollectkYC)
+		}
 	}
 
 	return router
