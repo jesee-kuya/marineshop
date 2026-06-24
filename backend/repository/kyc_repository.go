@@ -48,3 +48,43 @@ func (r *kycRepository) FindKYCByUserID(ctx context.Context, userID uuid.UUID) (
 	}
 	return kyc, nil
 }
+
+func (r *kycRepository) CreateBusinessKYC(ctx context.Context, kyc *domain.BusinessKYC) (*domain.BusinessKYC, error) {
+	query := `
+		INSERT INTO business_kyc (seller_kyc_id, business_name, document_type, document)
+		VALUES ($1, $2, $3, $4)
+		RETURNING id, seller_kyc_id, business_name, document_type, document, status, created_at, updated_at
+	`
+	created := &domain.BusinessKYC{}
+	err := r.db.QueryRowContext(ctx, query,
+		kyc.SellerKYCID, kyc.BusinessName, kyc.DocumentType, kyc.Document,
+	).Scan(
+		&created.ID, &created.SellerKYCID, &created.BusinessName,
+		&created.DocumentType, &created.Document, &created.Status,
+		&created.CreatedAt, &created.UpdatedAt,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return created, nil
+}
+
+func (r *kycRepository) FindBusinessKYCBySellerKYCID(ctx context.Context, sellerKYCID uuid.UUID) (*domain.BusinessKYC, error) {
+	query := `
+		SELECT id, seller_kyc_id, business_name, document_type, document, status, created_at, updated_at
+		FROM business_kyc WHERE seller_kyc_id = $1
+	`
+	kyc := &domain.BusinessKYC{}
+	err := r.db.QueryRowContext(ctx, query, sellerKYCID).Scan(
+		&kyc.ID, &kyc.SellerKYCID, &kyc.BusinessName,
+		&kyc.DocumentType, &kyc.Document, &kyc.Status,
+		&kyc.CreatedAt, &kyc.UpdatedAt,
+	)
+	if err != nil {
+		if err == sql.ErrNoRows {
+			return nil, nil
+		}
+		return nil, err
+	}
+	return kyc, nil
+}
