@@ -12,3 +12,7 @@ func NewAuthService(userRepo repository.UserRepository, jwtCfg *domain.JWTConfig
 func NewSellerService(kycRepo repository.KYCRepository) SellerService {
 	return &Seller{KYCRepo: kycRepo}
 }
+
+func NewMoneyService(moneyRepo repository.MoneyRepository, kycRepo repository.KYCRepository) MoneyService {
+	return &Money{MoneyRepo: moneyRepo, KYCRepo: kycRepo}
+}
