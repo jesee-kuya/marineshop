@@ -20,3 +20,8 @@ type KYCRepository interface {
 	CreateBusinessKYC(ctx context.Context, kyc *domain.BusinessKYC) (*domain.BusinessKYC, error)
 	FindBusinessKYCBySellerKYCID(ctx context.Context, sellerKYCID uuid.UUID) (*domain.BusinessKYC, error)
 }
+
+type MoneyRepository interface {
+	CreateSellerPaymentAccount(ctx context.Context, account *domain.SellerPaymentAccount) (*domain.SellerPaymentAccount, error)
+	FindPaymentAccountsBySellerID(ctx context.Context, sellerID uuid.UUID) ([]*domain.SellerPaymentAccount, error)
+}
