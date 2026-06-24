@@ -28,12 +28,17 @@ func main() {
 	defer db.Close()
 
 	userRepo := repository.NewUserRepository(db)
+	kycRepo := repository.NewKYCRepository(db)
+
 	authService := service.NewAuthService(userRepo, &cfg.JWT)
+	sellerService := service.NewSellerService(kycRepo)
+
 	middleware := middleware.NewMiddleware(&cfg.JWT)
 
 	shop := handler.Marineshop{
-		AuthService: authService,
-		Middleware:  middleware,
+		AuthService:   authService,
+		SellerService: sellerService,
+		Middleware:    middleware,
 	}
 
 	router := shop.SetupRoutes()
