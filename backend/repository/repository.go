@@ -9,3 +9,7 @@ func NewUserRepository(db *sqlx.DB) UserRepository {
 func NewKYCRepository(db *sqlx.DB) KYCRepository {
 	return &kycRepository{db: db}
 }
+
+func NewMoneyRepository(db *sqlx.DB) MoneyRepository {
+	return &moneyRepository{db: db}
+}
