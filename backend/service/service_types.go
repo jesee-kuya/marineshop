@@ -13,3 +13,8 @@ type Auth struct {
 type Seller struct {
 	KYCRepo repository.KYCRepository
 }
+
+type Money struct {
+	MoneyRepo repository.MoneyRepository
+	KYCRepo   repository.KYCRepository
+}
