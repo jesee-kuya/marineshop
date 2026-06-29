@@ -4,10 +4,11 @@ import "time"
 
 // Config holds all application configuration.
 type Config struct {
-	Environment string
-	Server      ServerConfig
-	Database    DatabaseConfig
-	JWT         JWTConfig
+	Environment    string
+	Server         ServerConfig
+	Database       DatabaseConfig
+	JWT            JWTConfig
+	AdminSecret    string
 }
 
 // ServerConfig holds HTTP server configuration.
