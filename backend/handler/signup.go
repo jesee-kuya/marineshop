@@ -15,6 +15,13 @@ func (shop *Marineshop) Signup(c *gin.Context) {
 		return
 	}
 
+	if req.Role == "admin" {
+		if shop.AdminSecret == "" || req.AdminSecret != shop.AdminSecret {
+			c.JSON(http.StatusForbidden, gin.H{"error": domain.ErrInvalidAdminSecret.Error()})
+			return
+		}
+	}
+
 	res, err := shop.AuthService.Signup(c.Request.Context(), &req)
 	if err != nil {
 		if errors.Is(err, domain.ErrEmailInUse) {
