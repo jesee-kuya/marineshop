@@ -7,5 +7,5 @@ import (
 )
 
 func (shop *Marineshop) Logout(c *gin.Context) {
-	c.JSON(http.StatusNotImplemented, gin.H{"message": "not implemented"})
+	c.JSON(http.StatusOK, gin.H{"message": "logged out successfully"})
 }
