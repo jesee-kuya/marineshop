@@ -69,6 +69,54 @@ func (r *kycRepository) CreateBusinessKYC(ctx context.Context, kyc *domain.Busin
 	return created, nil
 }
 
+func (r *kycRepository) GetPendingKYCs(ctx context.Context) ([]*domain.SellerKYC, error) {
+	query := `
+		SELECT id, user_id, full_name, phone_number, national_id, national_id_document, selfie, location, status, created_at, updated_at
+		FROM seller_kyc WHERE status = 'pending'
+		ORDER BY created_at ASC
+	`
+	rows, err := r.db.QueryContext(ctx, query)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	var kycs []*domain.SellerKYC
+	for rows.Next() {
+		kyc := &domain.SellerKYC{}
+		if err := rows.Scan(
+			&kyc.ID, &kyc.UserID, &kyc.FullName, &kyc.PhoneNumber,
+			&kyc.NationalID, &kyc.NationalIDDocument, &kyc.Selfie,
+			&kyc.Location, &kyc.Status, &kyc.CreatedAt, &kyc.UpdatedAt,
+		); err != nil {
+			return nil, err
+		}
+		kycs = append(kycs, kyc)
+	}
+	return kycs, rows.Err()
+}
+
+func (r *kycRepository) UpdateKYCStatus(ctx context.Context, id uuid.UUID, status string) (*domain.SellerKYC, error) {
+	query := `
+		UPDATE seller_kyc SET status = $1, updated_at = NOW()
+		WHERE id = $2
+		RETURNING id, user_id, full_name, phone_number, national_id, national_id_document, selfie, location, status, created_at, updated_at
+	`
+	updated := &domain.SellerKYC{}
+	err := r.db.QueryRowContext(ctx, query, status, id).Scan(
+		&updated.ID, &updated.UserID, &updated.FullName, &updated.PhoneNumber,
+		&updated.NationalID, &updated.NationalIDDocument, &updated.Selfie,
+		&updated.Location, &updated.Status, &updated.CreatedAt, &updated.UpdatedAt,
+	)
+	if err != nil {
+		if err == sql.ErrNoRows {
+			return nil, domain.ErrKYCNotFound
+		}
+		return nil, err
+	}
+	return updated, nil
+}
+
 func (r *kycRepository) FindBusinessKYCBySellerKYCID(ctx context.Context, sellerKYCID uuid.UUID) (*domain.BusinessKYC, error) {
 	query := `
 		SELECT id, seller_kyc_id, business_name, document_type, document, status, created_at, updated_at
