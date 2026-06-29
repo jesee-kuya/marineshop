@@ -8,7 +8,10 @@ import (
 )
 
 func (s *Auth) Signup(ctx context.Context, req *domain.SignupRequest) (*domain.AuthResponse, error) {
-	existing, _ := s.UserRepo.FindByEmail(ctx, req.Email)
+	existing, err := s.UserRepo.FindByEmail(ctx, req.Email)
+	if err != nil {
+		return nil, err
+	}
 	if existing != nil {
 		return nil, domain.ErrEmailInUse
 	}
@@ -22,7 +25,7 @@ func (s *Auth) Signup(ctx context.Context, req *domain.SignupRequest) (*domain.A
 		Username: req.Username,
 		Email:    req.Email,
 		Password: hashed,
-		Role:     "user",
+		Role:     req.Role,
 	}
 
 	created, err := s.UserRepo.CreateUser(ctx, user)
