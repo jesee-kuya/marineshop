@@ -2,6 +2,7 @@ package repository
 
 import (
 	"context"
+	"database/sql"
 
 	"github.com/google/uuid"
 	"github.com/jesee-kuya/marineshop/domain"
@@ -28,6 +29,9 @@ func (r *userRepository) FindByEmail(ctx context.Context, email string) (*domain
 	err := r.db.QueryRowContext(ctx, query, email).
 		Scan(&user.ID, &user.Username, &user.Email, &user.Password, &user.Role)
 	if err != nil {
+		if err == sql.ErrNoRows {
+			return nil, nil
+		}
 		return nil, err
 	}
 	return user, nil
@@ -39,6 +43,9 @@ func (r *userRepository) FindByID(ctx context.Context, id uuid.UUID) (*domain.Us
 	err := r.db.QueryRowContext(ctx, query, id).
 		Scan(&user.ID, &user.Username, &user.Email, &user.Password, &user.Role)
 	if err != nil {
+		if err == sql.ErrNoRows {
+			return nil, nil
+		}
 		return nil, err
 	}
 	return user, nil
