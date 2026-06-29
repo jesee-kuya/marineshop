@@ -30,18 +30,29 @@ func main() {
 	userRepo := repository.NewUserRepository(db)
 	kycRepo := repository.NewKYCRepository(db)
 	moneyRepo := repository.NewMoneyRepository(db)
+	productRepo := repository.NewProductRepository(db)
+	orderRepo := repository.NewOrderRepository(db)
+	buyerRepo := repository.NewBuyerRepository(db)
+	store := repository.NewStore(db)
 
 	authService := service.NewAuthService(userRepo, &cfg.JWT)
-	sellerService := service.NewSellerService(kycRepo)
+	sellerService := service.NewSellerService(kycRepo, productRepo, orderRepo)
 	moneyService := service.NewMoneyService(moneyRepo, kycRepo)
+	productService := service.NewProductService(productRepo)
+	buyerService := service.NewBuyerService(buyerRepo, productRepo, orderRepo, userRepo, store)
+	adminService := service.NewAdminService(kycRepo)
 
 	middleware := middleware.NewMiddleware(&cfg.JWT)
 
 	shop := handler.Marineshop{
-		AuthService:   authService,
-		SellerService: sellerService,
-		MoneyService:  moneyService,
-		Middleware:    middleware,
+		AuthService:    authService,
+		SellerService:  sellerService,
+		MoneyService:   moneyService,
+		ProductService: productService,
+		BuyerService:   buyerService,
+		AdminService:   adminService,
+		Middleware:     middleware,
+		AdminSecret:    cfg.AdminSecret,
 	}
 
 	router := shop.SetupRoutes()
