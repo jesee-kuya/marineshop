@@ -6,8 +6,12 @@ import (
 )
 
 type Marineshop struct {
-	AuthService   service.AuthService
-	SellerService service.SellerService
-	MoneyService  service.MoneyService
-	Middleware    middleware.Middleware
+	AuthService    service.AuthService
+	SellerService  service.SellerService
+	MoneyService   service.MoneyService
+	ProductService service.ProductService
+	BuyerService   service.BuyerService
+	AdminService   service.AdminService
+	Middleware     middleware.Middleware
+	AdminSecret    string
 }
