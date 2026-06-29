@@ -36,6 +36,7 @@ func Load() (*domain.Config, error) {
 			SecretKey:       GetEnv("JWT_SECRET_KEY", ""),
 			TokenExpiration: GetEnvAsDuration("JWT_TOKEN_EXPIRATION", 24*time.Hour),
 		},
+		AdminSecret: GetEnv("ADMIN_SETUP_SECRET", ""),
 	}
 
 	// Validate required fields
