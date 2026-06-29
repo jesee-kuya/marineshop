@@ -22,6 +22,7 @@ func (shop *Marineshop) Login(c *gin.Context) {
 			return
 		} else if errors.Is(err, domain.ErrUserNotFound) {
 			c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
+			return
 		}
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "failed to login"})
 		return
