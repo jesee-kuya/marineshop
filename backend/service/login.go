@@ -2,8 +2,6 @@ package service
 
 import (
 	"context"
-	"database/sql"
-	"errors"
 
 	"github.com/jesee-kuya/marineshop/domain"
 	"github.com/jesee-kuya/marineshop/utils"
@@ -12,10 +10,10 @@ import (
 func (s *Auth) Login(ctx context.Context, req *domain.LoginRequest) (*domain.AuthResponse, error) {
 	user, err := s.UserRepo.FindByEmail(ctx, req.Email)
 	if err != nil {
-		if errors.Is(err, sql.ErrNoRows) {
-			return nil, domain.ErrInvalidCredentials
-		}
 		return nil, err
+	}
+	if user == nil {
+		return nil, domain.ErrInvalidCredentials
 	}
 
 	if !utils.CheckPassword(req.Password, user.Password) {
